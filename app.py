@@ -21,14 +21,12 @@ if uploaded_file:
         score = calculate_score(text, job_desc)
         st.subheader(f"🎯 Match Score: {score}%")
 
-    if location == "Indore":
-        data = indore_companies
-    else:
-        data = all_companies
+ location = st.selectbox(
+    "Select City",
+    ["All", "Bangalore", "Hyderabad", "Mumbai", "Delhi", "Pune"]
+)
 
-    st.subheader("🏢 Recommended Companies")
-
-    results = recommend_companies(skills, data)
-
-    for name, score, ctype in results:
-        st.write(f"{name} ({ctype}) - {round(score*100)}% match")
+if location == "All":
+    data = companies
+else:
+    data = [c for c in companies if c["city"] == location]
